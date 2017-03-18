@@ -5,6 +5,8 @@ import { NavigationButton } from '../NavigationButton';
 
 import Camera from "react-native-camera";
 
+import NativeModules from 'react-native-image-to-base64';
+
 import { styles } from '../Styles';
 
 export class MainScreen extends React.Component {
@@ -58,6 +60,7 @@ export class MainScreen extends React.Component {
         </TouchableHighlight> }
 
         <NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />
+        
         <StatusBar hidden={false} />
 
         { this.state.image == null && <NavigationButton navigation={this.props.navigation} styleType={"ViewQueueButton"} name={"View Queue"} link={"Queue"} /> }
@@ -65,13 +68,37 @@ export class MainScreen extends React.Component {
     );
   }
   
+  async sendImage() {
+    var url = "http://<SOME_IP>/api/upload";
+    let file = NativeModules.RNImageToBase64.getBase64String(uri, (err, base64) => {
+      let response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          file: base64,
+          lat: "Lat",
+          lon: "Long",
+          caption: "",
+          language: "en_us",
+          apikey: "ApiKey"
+        })
+      });
+
+      let responseJson = await response.json();
+    })
+  }
+
   clearImage() {
     this.setState({image:null});
   }
 
   takePicture() {
     this.camera.capture()
-      .then((data) => this.setState({image:data.path}))
-      .catch(err => console.error(err));
-  }
+      .then((data) => { 
+        this.setState({image:data.path});
+      })
+    }
 }
