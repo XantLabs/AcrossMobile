@@ -36,7 +36,8 @@ export class MainScreen extends React.Component {
       image: null,
       initialPosition: null,
       lang: null,
-      newPhotos: null
+      newPhotos: null,
+      backCamera: true
     }
   }
 
@@ -62,6 +63,7 @@ export class MainScreen extends React.Component {
           captureTarget={Camera.constants.CaptureTarget.disk}
           captureQuality={"720p"}
           orientation={"portrait"}
+          type={this.state.backCamera ? "back" : "front"}
           >
         </Camera>
 
@@ -69,7 +71,9 @@ export class MainScreen extends React.Component {
 
         {imageOn}
         
-        <Button onPress={this.sendImage.bind(this)} title="Send" />
+        <View style={{position: 'absolute', bottom: 50, left: 0, right: 0}}>
+          { this.state.image != null && <Button onPress={this.sendImage.bind(this)} title="Send" /> }
+        </View> 
 
         { this.state.image == null && <TouchableHighlight onPress={this.takePicture.bind(this)} underlayColor={null} style={{ zIndex: 2, alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
           <View style={{height: 50, width: 50, borderRadius: 128, backgroundColor: '#232528', opacity:0.7}}>
@@ -79,7 +83,9 @@ export class MainScreen extends React.Component {
           </View>
         </TouchableHighlight> }
 
-        <NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />
+        <Button onPress={() => { this.setState({backCamera: !this.state.backCamera})}} title="#" />
+
+        {/*<NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />*/}
         
         <StatusBar hidden={false} />
 
@@ -160,6 +166,13 @@ export class MainScreen extends React.Component {
 
     xhr = new XMLHttpRequest();
     xhr.open('POST', url);
+
+    xhr.onreadystatechange = function() {      
+      if(xhr.readyState == 4 && xhr.status == 200) {
+          this.setState({image: null});
+      }
+    }.bind(this);
+
     xhr.send(body);
   }
 
