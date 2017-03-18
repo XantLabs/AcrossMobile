@@ -96,6 +96,7 @@ export default class PhotoViewer extends Component {
     xhr.open('POST', url);
 
     xhr.onreadystatechange = function() {      
+      // console.log(xhr.responseText);
       console.log(xhr.readyState, xhr.status);
       if(xhr.readyState == 4 && xhr.status == 200) {
           console.log(xhr.responseText);
@@ -145,8 +146,8 @@ export default class PhotoViewer extends Component {
 
           renderCard={(cardData) => <Card {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
-          handleYup={this.handleYup}
-          handleNope={this.handleNope}
+          handleYup={this.handleYup.bind(this)}
+          handleNope={this.handleNope.bind(this)}
           />
         </View>
 
@@ -193,8 +194,8 @@ var styles = StyleSheet.create({
     borderRadius: 500
   },
   image: {
-    height: height*0.8,
-    width: width*0.8,
+    height: height*1,
+    width: width*1,
     backgroundColor: '#333'
   },
   buttonContainer: {

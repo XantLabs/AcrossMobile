@@ -83,7 +83,9 @@ export class MainScreen extends React.Component {
           </View>
         </TouchableHighlight> }
 
+        <View style={{position: 'absolute', height: 50, width: 50, right: 10, top: 10}}>
         <Button onPress={() => { this.setState({backCamera: !this.state.backCamera})}} title="#" />
+        </View>
 
         {/*<NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />*/}
         
