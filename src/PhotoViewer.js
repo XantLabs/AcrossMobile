@@ -34,10 +34,10 @@ export default class PhotoViewer extends Component {
     };
   }
   handleYup (card) {
-    console.log(`Yup`)
+    console.log(`Liked`)
   }
   handleNope (card) {
-    console.log(`Nope`)
+    console.log(`Dislike`)
   }
   render() {
     return (
@@ -56,13 +56,13 @@ export default class PhotoViewer extends Component {
       <Button
         onPress={onButtonPress}
         title="Like"
-        accessibilityLabel="See an informative alert"
+        accessibilityLabel="Like Button"
       />
 
       <Button
         onPress={onButtonPress}
         title="Dislike"
-        accessibilityLabel="See an informative alert"
+        accessibilityLabel="Dislike Button"
       />
       </View>
     );
