@@ -19,18 +19,18 @@ class NoMoreCards extends Component {
 }
 
 const Cards = [
-  {img:"http://i.imgur.com/qEzKzk9.jpg"},
-  {img:"http://i.imgur.com/qEzKzk9.jpg"},
-  {img:"http://i.imgur.com/qEzKzk9.jpg"},
-  {img:"http://i.imgur.com/qEzKzk9.jpg"},
-  {img:"http://i.imgur.com/qEzKzk9.jpg"},
+  {img:"http://i.imgur.com/qEzKzk9.jpg",id:1},
+  {img:"http://i.imgur.com/8OXR0a5.jpg",id:2},
+  {img:"http://i.imgur.com/USrrDph.jpg",id:3},
+  {img:"http://i.imgur.com/qEzKzk9.jpg",id:4},
+  {img:"http://i.imgur.com/qEzKzk9.jpg",id:5},
 ]
 
 export default class PhotoViewer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards:Cards
+      cards:this.getImages()
     };
   }
   handleYup (card) {
@@ -38,6 +38,11 @@ export default class PhotoViewer extends Component {
   }
   handleNope (card) {
     console.log(`Dislike`)
+  }
+
+  //Return an array of images
+  getImages() {
+    return Cards
   }
   render() {
     return (
@@ -67,6 +72,8 @@ export default class PhotoViewer extends Component {
       </View>
     );
   }
+
+
 }
 
 const onButtonPress = () => {
