@@ -1,36 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, StatusBar } from 'react-native';
+import { StackNavigator, TabNavigator } from 'react-navigation';
+import { NavigationButton } from './src/NavigationButton';
 
-class Snap extends React.Component {
-  componentDidMount() {
-    console.log("mounted");
-    console.log(this);
+class MainScreen extends React.Component {
+  static navigationOptions = {
+    title: "Main Screen"
   }
 
-  passResultsUp() {
-    console.log(this);
-    this.props.buttonCallback(1);
-  }
-
-  render() {
-    return <View>
-      <Text>{this.props.text}</Text>
-      <Button onPress={this.passResultsUp.bind(this)} title="Hehe" />
-    </View>
-  }
-}
-
-export default class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      num: 0
-    }
-  }
-  
-  process(data) {
-    console.log("ye");
-    this.setState({num:data})
+    this.state = {}
   }
 
   render() {
@@ -38,18 +18,34 @@ export default class App extends React.Component {
       uri: "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg"
     };
 
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
-        <Snap buttonCallback={this.process.bind(this)} text={this.state.num} />
+        <NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />
+        <StatusBar hidden={true} />
         <Image source={imageURL} style={{width:200, height:200}} />
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
         <Text>Hello!</Text>
+        <NavigationButton navigation={this.props.navigation} styleType={"ViewQueueButton"} name={"View Queue"} link={"Queue"} />
       </View>
     );
+  }  
+}
+
+class SettingsScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Settings</Text>
+      </View>
+    )
   }
 }
+
+export default App = TabNavigator({
+  Main: {screen: MainScreen},
+  Settings: {screen: SettingsScreen}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -57,5 +53,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
