@@ -25,6 +25,8 @@ export class MainScreen extends React.Component {
        var initialPosition = position; 
        this.setState({initialPosition});
        console.log("Got location!");
+        this.getPhotos();
+
       }, (error) => alert(JSON.stringify(error)));
   }
 
@@ -33,7 +35,8 @@ export class MainScreen extends React.Component {
     this.state = {
       image: null,
       initialPosition: null,
-      lang: null
+      lang: null,
+      newPhotos: null
     }
   }
 
@@ -85,6 +88,57 @@ export class MainScreen extends React.Component {
     );
   }
   
+  voteOnPhoto(isUp, url) {
+    var baseURL = null;
+    
+    if (isUp) 
+      baseURL = serverAddress + "/api/upvote/" + url;
+    else
+      baseURL = serverAddress + "/api/downvote/" + url;
+
+    console.log("Starting vote function.");
+    console.log(baseURL);
+
+    var body = new FormData();
+    body.append('apikey', apikey);
+
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', baseURL);
+
+    xhr.onreadystatechange = function() {  
+      if(xhr.readyState == 4 && xhr.status == 200) {
+      }
+    }.bind(this);
+
+    xhr.send(body);
+  }
+
+  getPhotos() {
+    var url = serverAddress + "/api/photo_list";
+
+    console.log("Starting getPhotos function.");
+
+    var body = new FormData();
+    body.append('apikey', apikey);
+    body.append('userLat', this.state.initialPosition.coords.latitude);
+    body.append('userLon', this.state.initialPosition.coords.longitude);
+    body.append('n', 20);
+
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+
+    xhr.onreadystatechange = function() {      
+      if(xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText);
+          var newPhotos = JSON.parse(xhr.responseText);
+          console.log(newPhotos);
+          this.setState({newPhotos: newPhotos.images});
+      }
+    }.bind(this);
+
+    xhr.send(body);
+  }
+
   sendImage() {
     var url = serverAddress + "/api/upload";
 
