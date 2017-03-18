@@ -5,7 +5,8 @@ import { NavigationButton } from '../NavigationButton';
 
 import Camera from "react-native-camera";
 
-import NativeModules from 'react-native-image-to-base64';
+import NativeModules from 'NativeModules';
+import ReactNativeI18n from 'react-native-i18n';
 
 import { styles } from '../Styles';
 
@@ -14,11 +15,23 @@ export class MainScreen extends React.Component {
     title: "Main Screen"
   }
 
+  componentDidMount() {
+      var lang = ReactNativeI18n.locale;
+      this.setState({lang});
+
+      navigator.geolocation.getCurrentPosition( (position) => { 
+       var initialPosition = position; 
+       this.setState({initialPosition});
+       console.log("Got location!");
+      }, (error) => alert(JSON.stringify(error)), {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000} );
+  }
+
   constructor() {
     super();
     this.state = {
       image: null,
-      hasCameraPermission: null
+      initialPosition: null,
+      lang: null
     }
   }
 
@@ -68,10 +81,11 @@ export class MainScreen extends React.Component {
     );
   }
   
-  async sendImage() {
+  sendImage() {
     var url = "http://<SOME_IP>/api/upload";
+
     let file = NativeModules.RNImageToBase64.getBase64String(uri, (err, base64) => {
-      let response = await fetch(url, {
+      fetch(url, {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -79,15 +93,15 @@ export class MainScreen extends React.Component {
         },
         body: JSON.stringify({
           file: base64,
-          lat: "Lat",
-          lon: "Long",
+          lat: this.state.initialPosition.coords.latitude,
+          lon: this.state.initialPosition.coords.longitude,
           caption: "",
-          language: "en_us",
+          language: this.state.lang,
           apikey: "ApiKey"
         })
-      });
-
-      let responseJson = await response.json();
+      })
+      .then((response) => console.log(response.text()))
+      .catch((error) => console.warn(error));
     })
   }
 

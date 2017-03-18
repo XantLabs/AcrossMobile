@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.github.xfumihiro.react_native_image_to_base64.ImageToBase64Package;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeI18n(),
             new ImageToBase64Package(),
             new RCTCameraPackage(),
             new RNViewShotPackage()
