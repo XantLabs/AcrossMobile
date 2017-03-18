@@ -76,7 +76,6 @@ export default class PhotoViewer extends Component {
 
     xhr.onreadystatechange = function() {      
       console.log(xhr.readyState, xhr.status);
-      // console.log(xhr.responseText);
       if(xhr.readyState == 4 && xhr.status == 200) {
           console.log(xhr.responseText);
           var newPhotos = JSON.parse(xhr.responseText);
@@ -104,34 +103,6 @@ export default class PhotoViewer extends Component {
     console.log(`Dislike`)
   }
 
-  //Return an array of images
-  // getImages() {
-  //  var url = serverAddress + "/api/photo_list";
-  //   console.log(url);
-  //   console.log("Starting getPhotos function.");
-
-  //   var body = new FormData();
-  //   body.append('apikey', apikey);
-  //   body.append('userLat', this.state.initialPosition.coords.latitude);
-  //   body.append('userLon', this.state.initialPosition.coords.longitude);
-  //   body.append('n', 20);
-
-  //   xhr = new XMLHttpRequest();
-  //   xhr.open('POST', url);
-
-  //   xhr.onreadystatechange = function() {      
-  //     if(xhr.readyState == 4 && xhr.status == 200) {
-  //         console.log(xhr.responseText);
-  //         var newPhotos = JSON.parse(xhr.responseText);
-  //         console.log(newPhotos);
-  //         return newPhotos
-  //         this.setState({newPhotos: newPhotos.images});
-  //     }
-  //   }.bind(this);
-
-  //   xhr.send(body);
-  // }
-
   onButtonPress(isLike) {
     console.log(this.state);
     var temp = this.state.cards;
@@ -143,15 +114,6 @@ export default class PhotoViewer extends Component {
   }
 
   render() {
-    var cards = []
-    if (this.state.newPhotos != null) {
-      for (var index = 0; index < this.state.newPhotos.length; index++) {
-        cards.append(this.state.newPhotos.img);
-      }
-
-      console.log("CARDS", cards);
-    }
-
     return (
       <View style={styles.page}>
         <View style={styles.imageContainer}>

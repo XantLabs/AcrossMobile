@@ -17,19 +17,6 @@ export class MainScreen extends React.Component {
     title: "Main Screen"
   }
 
-  // componentDidMount() {
-  //     var lang = ReactNativeI18n.locale;
-  //     this.setState({lang});
-
-  //     navigator.geolocation.getCurrentPosition( (position) => { 
-  //      var initialPosition = position; 
-  //      this.setState({initialPosition});
-  //      console.log("Got location!");
-  //       this.getPhotos();
-
-  //     }, (error) => alert(JSON.stringify(error)));
-  // }
-
   constructor() {
     super();
     this.state = {
