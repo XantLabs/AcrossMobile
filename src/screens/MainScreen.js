@@ -3,6 +3,8 @@ import { StyleSheet, TouchableHighlight, Text, View, Image, StatusBar, Button } 
 import { TabNavigator } from 'react-navigation';
 import { NavigationButton } from '../NavigationButton';
 
+import {takeSnapshot} from "react-native-view-shot";
+
 import Expo from 'expo';
 
 import { styles } from '../Styles';
@@ -27,6 +29,8 @@ export class MainScreen extends React.Component {
   }  
 
   render() {
+    console.log(this.state);
+
     let imageURL = {  
       uri: "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg"
     };
@@ -42,15 +46,22 @@ export class MainScreen extends React.Component {
 
     // this.setState({cameraRef: camera});
 
-    return (
-      <View style={styles.container}>
+    imageLoc = this.state.image || "http://www.iconsdb.com/icons/preview/white/camera-xxl.png";
+    var element = null;
+    if (imageLoc != null) {
+      element = <Image source={{uri: imageLoc}} style={{backgroundColor:'black', width:200, height:200}} />
+    }
 
-        <Expo.Components.BarCodeScanner
-          style={StyleSheet.absoluteFill}
+    return (
+      <View ref="home" style={styles.container} collapsable={false}>
+        <View ref="test" collapsable={false}>
+        <Expo.Components.BarCodeScanner ref="a"
+          style={{backgroundColor:"red", width:200, height:200}}
           type="back"
         />
+        </View>
         <TouchableHighlight onPress={this._pickImage} style={{alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
-          <View style={{height: 50, width: 50, borderRadius: 128, backgroundColor: 'black', opacity:0.7}}>
+          <View ref="swag" style={{height: 50, width: 50, borderRadius: 128, backgroundColor: 'black', opacity:0.7}}>
             <View style={{left: 2, top: 2, height: 46, width: 46, borderRadius: 128, backgroundColor: 'white', opacity: 0.7}}>
               
             </View>
@@ -62,7 +73,7 @@ export class MainScreen extends React.Component {
 
         <NavigationButton navigation={this.props.navigation} styleType={"ViewQueueButton"} name={"View Queue"} link={"Queue"} />
 
-        <Image source={{uri: this.state.image || null}} style={{width:200, height:200}} />
+        {element}
       </View>
     );
   }
@@ -74,11 +85,24 @@ export class MainScreen extends React.Component {
     // });
 
     // console.log(result);
-
-    let result = await Expo.takeSnapshotAsync();
-    console.log(result);
+    console.log(this.cameraRef);
+    let result = await Expo.takeSnapshotAsync(this.refs["a"], {
+      format: "png",
+      quality: 1,
+      result: "file",
+      height: 500,
+      width: 500
+    });
+    // let result = await takeSnapshot(this.refs["swag"], {
+    //   result: "file",
+    //   height: 500,
+    //   width: 500
+    // })
+    // console.log("DONE!");
+    // console.log(result);
     if (result) {
-      this.setState({image: result.uri});
+      console.log(result);
+      this.setState({image: result});
     }
   }
 }
