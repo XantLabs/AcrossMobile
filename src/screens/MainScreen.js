@@ -5,7 +5,9 @@ import { NavigationButton } from '../NavigationButton';
 
 import {takeSnapshot} from "react-native-view-shot";
 
-import Expo from 'expo';
+// import Expo from 'expo';
+
+import Camera from "react-native-camera";
 
 import { styles } from '../Styles';
 
@@ -23,10 +25,10 @@ export class MainScreen extends React.Component {
     }
   }
 
-  async componentWillMount() {
-    const { status } = await Expo.Permissions.askAsync(Expo.Permissions.CAMERA);
-    this.setState({hasCameraPermission: status === 'granted'});
-  }  
+  // async componentWillMount() {
+  //   // const { status } = await Expo.Permissions.askAsync(Expo.Permissions.CAMERA);
+  //   // this.setState({hasCameraPermission: status === 'granted'});
+  // }  
 
   render() {
     console.log(this.state);
@@ -35,32 +37,23 @@ export class MainScreen extends React.Component {
       uri: "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg"
     };
 
-    let cameraURL = {
-      uri: "http://www.iconsdb.com/icons/preview/white/camera-xxl.png"
-    }
-
-    let camera = <Expo.Components.BarCodeScanner
-          style={StyleSheet.absoluteFill}
-          type="back"
-        />;
-
-    // this.setState({cameraRef: camera});
-
-    imageLoc = this.state.image || "http://www.iconsdb.com/icons/preview/white/camera-xxl.png";
-    var element = null;
-    if (imageLoc != null) {
-      element = <Image source={{uri: imageLoc}} style={{backgroundColor:'black', width:200, height:200}} />
-    }
-
     return (
-      <View ref="home" style={styles.container} collapsable={false}>
-        <View ref="test" collapsable={false}>
-        <Expo.Components.BarCodeScanner ref="a"
-          style={{backgroundColor:"red", width:200, height:200}}
-          type="back"
-        />
+      <View ref="home" style={stylesa.container} collapsable={false}>
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={stylesa.preview}
+          aspect={Camera.constants.Aspect.fill}>
+        </Camera>
+
+        <Image source={{uri: this.state.image}} style={StyleSheet.absoluteFill} />
+
+        <View style={{width: 50, height: 50, position: 'absolute', left: 10, top: 10}}>
+        <Button onPress={this.clearImage.bind(this)} title="X" />
         </View>
-        <TouchableHighlight onPress={this._pickImage} style={{alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
+        
+        <TouchableHighlight onPress={this.takePicture.bind(this)} style={{ zIndex: 2, alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
           <View ref="swag" style={{height: 50, width: 50, borderRadius: 128, backgroundColor: 'black', opacity:0.7}}>
             <View style={{left: 2, top: 2, height: 46, width: 46, borderRadius: 128, backgroundColor: 'white', opacity: 0.7}}>
               
@@ -72,37 +65,37 @@ export class MainScreen extends React.Component {
         <StatusBar hidden={true} />
 
         <NavigationButton navigation={this.props.navigation} styleType={"ViewQueueButton"} name={"View Queue"} link={"Queue"} />
-
-        {element}
       </View>
     );
   }
   
-  _pickImage = async () => {
-    // let result = await Expo.ImagePicker.launchCameraAsync({
-    //   allowsEditing: false,
-    //   aspect: [4,3]
-    // });
+  clearImage() {
+    this.setState({image:null});
+  }
 
-    // console.log(result);
-    console.log(this.cameraRef);
-    let result = await Expo.takeSnapshotAsync(this.refs["a"], {
-      format: "png",
-      quality: 1,
-      result: "file",
-      height: 500,
-      width: 500
-    });
-    // let result = await takeSnapshot(this.refs["swag"], {
-    //   result: "file",
-    //   height: 500,
-    //   width: 500
-    // })
-    // console.log("DONE!");
-    // console.log(result);
-    if (result) {
-      console.log(result);
-      this.setState({image: result});
-    }
+  takePicture() {
+    this.camera.capture()
+      .then((data) => this.setState({image:data.path}))
+      .catch(err => console.error(err));
   }
 }
+
+const stylesa = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    color: '#000',
+    padding: 10,
+    margin: 40
+  }
+});
