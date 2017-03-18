@@ -37,6 +37,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		030225CD8E964A5EAC4C6F0C /* libRNViewShot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EAF5FDDF5D743BCA28A3E7E /* libRNViewShot.a */; };
 		FF83BD2D062C49E4940816C6 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B7ED22E5774CA593E11E70 /* libRCTCamera.a */; };
+		5D01B3FADAE049D5B97DF4B4 /* libRNImageToBase64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36328D0563714BBDABDF59A5 /* libRNImageToBase64.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +261,8 @@
 		5EAF5FDDF5D743BCA28A3E7E /* libRNViewShot.a */ = {isa = PBXFileReference; name = "libRNViewShot.a"; path = "libRNViewShot.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		65FDB09CC90F4B168ABAB249 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; name = "RCTCamera.xcodeproj"; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A4B7ED22E5774CA593E11E70 /* libRCTCamera.a */ = {isa = PBXFileReference; name = "libRCTCamera.a"; path = "libRCTCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E86EA9446BE74E9EB8BC7C80 /* RNImageToBase64.xcodeproj */ = {isa = PBXFileReference; name = "RNImageToBase64.xcodeproj"; path = "../node_modules/react-native-image-to-base64/ios/RNImageToBase64.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		36328D0563714BBDABDF59A5 /* libRNImageToBase64.a */ = {isa = PBXFileReference; name = "libRNImageToBase64.a"; path = "libRNImageToBase64.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +291,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				030225CD8E964A5EAC4C6F0C /* libRNViewShot.a in Frameworks */,
 				FF83BD2D062C49E4940816C6 /* libRCTCamera.a in Frameworks */,
+				5D01B3FADAE049D5B97DF4B4 /* libRNImageToBase64.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +460,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				335EEA993D8F444E8BD6A62A /* RNViewShot.xcodeproj */,
 				65FDB09CC90F4B168ABAB249 /* RCTCamera.xcodeproj */,
+				E86EA9446BE74E9EB8BC7C80 /* RNImageToBase64.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -985,6 +990,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1005,6 +1011,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AndroidApp.app/AndroidApp";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1073,6 +1080,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1104,6 +1112,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;
@@ -1130,6 +1139,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1154,6 +1164,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
