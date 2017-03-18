@@ -8,6 +8,8 @@ import Camera from "react-native-camera";
 import NativeModules from 'NativeModules';
 import ReactNativeI18n from 'react-native-i18n';
 
+import { apikey, serverAddress } from '../../apikey';
+
 import { styles } from '../Styles';
 
 export class MainScreen extends React.Component {
@@ -23,7 +25,7 @@ export class MainScreen extends React.Component {
        var initialPosition = position; 
        this.setState({initialPosition});
        console.log("Got location!");
-      }, (error) => alert(JSON.stringify(error)), {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000} );
+      }, (error) => alert(JSON.stringify(error)));
   }
 
   constructor() {
@@ -64,6 +66,8 @@ export class MainScreen extends React.Component {
 
         {imageOn}
         
+        <Button onPress={this.sendImage.bind(this)} title="Send" />
+
         { this.state.image == null && <TouchableHighlight onPress={this.takePicture.bind(this)} underlayColor={null} style={{ zIndex: 2, alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
           <View style={{height: 50, width: 50, borderRadius: 128, backgroundColor: '#232528', opacity:0.7}}>
             <View style={{left: 2, top: 2, height: 46, width: 46, borderRadius: 128, backgroundColor: 'white', opacity: 0.7}}>
@@ -82,7 +86,7 @@ export class MainScreen extends React.Component {
   }
   
   sendImage() {
-    var url = "http://<SOME_IP>/api/upload";
+    var url = serverAddress + "/api/upload";
 
     let file = NativeModules.RNImageToBase64.getBase64String(uri, (err, base64) => {
       fetch(url, {
@@ -97,7 +101,7 @@ export class MainScreen extends React.Component {
           lon: this.state.initialPosition.coords.longitude,
           caption: "",
           language: this.state.lang,
-          apikey: "ApiKey"
+          apikey: apikey
         })
       })
       .then((response) => console.log(response.text()))
