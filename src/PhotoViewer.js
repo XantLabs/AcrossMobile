@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { AppRegistry,Dimensions,StyleSheet, Text, Image,View, Button } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 
-let PhotoCard = React.createClass({
+let Card = React.createClass({
   render() {
     return (
       <Image style={styles.image} source = {{uri:this.props.img}}/>
     )
   }
 })
+
+class NoMoreCards extends Component {
+  render() {
+    return(
+      <Text>No more photos available!</Text>
+    )
+  }
+}
 
 const Cards = [
   {img:"http://i.imgur.com/qEzKzk9.jpg"},
@@ -21,7 +29,9 @@ const Cards = [
 export default class PhotoViewer extends Component {
   constructor(props) {
     super(props);
-    this.state = {cards:Cards};
+    this.state = {
+      cards:Cards
+    };
   }
   handleYup (card) {
     console.log(`Yup`)
@@ -36,8 +46,8 @@ export default class PhotoViewer extends Component {
       <SwipeCards
       cards={this.state.cards}
 
-      renderCard={(cardData) => <PhotoCard {...cardData} />}
-      // renderNoMoreCards={() => <NoMoreCards />}
+      renderCard={(cardData) => <Card {...cardData} />}
+      renderNoMoreCards={() => <NoMoreCards />}
 
       handleYup={this.handleYup}
       handleNope={this.handleNope}
@@ -66,10 +76,11 @@ const onButtonPress = () => {
 var styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   image: {
-    flex: 1
+    height: 450,
+    width: 350
   }
 });
 
