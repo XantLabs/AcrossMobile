@@ -17,18 +17,18 @@ export class MainScreen extends React.Component {
     title: "Main Screen"
   }
 
-  componentDidMount() {
-      var lang = ReactNativeI18n.locale;
-      this.setState({lang});
+  // componentDidMount() {
+  //     var lang = ReactNativeI18n.locale;
+  //     this.setState({lang});
 
-      navigator.geolocation.getCurrentPosition( (position) => { 
-       var initialPosition = position; 
-       this.setState({initialPosition});
-       console.log("Got location!");
-        this.getPhotos();
+  //     navigator.geolocation.getCurrentPosition( (position) => { 
+  //      var initialPosition = position; 
+  //      this.setState({initialPosition});
+  //      console.log("Got location!");
+  //       this.getPhotos();
 
-      }, (error) => alert(JSON.stringify(error)));
-  }
+  //     }, (error) => alert(JSON.stringify(error)));
+  // }
 
   constructor() {
     super();
@@ -119,31 +119,7 @@ export class MainScreen extends React.Component {
     xhr.send(body);
   }
 
-  getPhotos() {
-    var url = serverAddress + "/api/photo_list";
 
-    console.log("Starting getPhotos function.");
-
-    var body = new FormData();
-    body.append('apikey', apikey);
-    body.append('userLat', this.state.initialPosition.coords.latitude);
-    body.append('userLon', this.state.initialPosition.coords.longitude);
-    body.append('n', 20);
-
-    xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-
-    xhr.onreadystatechange = function() {      
-      if(xhr.readyState == 4 && xhr.status == 200) {
-          console.log(xhr.responseText);
-          var newPhotos = JSON.parse(xhr.responseText);
-          console.log(newPhotos);
-          this.setState({newPhotos: newPhotos.images});
-      }
-    }.bind(this);
-
-    xhr.send(body);
-  }
 
   sendImage() {
     var url = serverAddress + "/api/upload";

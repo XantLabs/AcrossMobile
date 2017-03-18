@@ -18,6 +18,11 @@ class NoMoreCards extends Component {
   }
 }
 
+import NativeModules from 'NativeModules';
+import ReactNativeI18n from 'react-native-i18n';
+
+import { apikey, serverAddress } from '../apikey';
+
 const Cards = [
   {img:"http://i.imgur.com/qEzKzk9.jpg",id:1},
   {img:"http://i.imgur.com/8OXR0a5.jpg",id:2},
@@ -30,9 +35,68 @@ export default class PhotoViewer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards:this.getImages()
+      // cards:this.getImages(),
+      lang: null,
+      newPhotos: null
     };
   }
+
+
+  componentDidMount() {
+      var lang = ReactNativeI18n.locale;
+      this.setState({lang});
+
+      navigator.geolocation.getCurrentPosition( (position) => { 
+       var initialPosition = position; 
+       this.setState({initialPosition});
+       console.log("Got location!");
+        this.getPhotos();
+
+      }, (error) => alert(JSON.stringify(error)));
+
+      // this.setState({
+      //   cards: this.getImages()
+      // })
+  }
+
+
+  getPhotos() {
+    var url = serverAddress + "/api/photo_list";
+
+    console.log("Starting getPhotos function.");
+
+    var body = new FormData();
+    body.append('apikey', apikey);
+    body.append('userLat', this.state.initialPosition.coords.latitude);
+    body.append('userLon', this.state.initialPosition.coords.longitude);
+    body.append('n', 20);
+
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+
+    xhr.onreadystatechange = function() {      
+      console.log(xhr.readyState, xhr.status);
+      // console.log(xhr.responseText);
+      if(xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText);
+          var newPhotos = JSON.parse(xhr.responseText);
+          console.log(newPhotos);
+          this.setState({newPhotos: newPhotos.images});
+
+          var cards = [];
+          for (var index = 0; index < newPhotos.length; index++) {
+            cards.push({ img: serverAddress +"/api/media/"+ newPhotos[index]["img"]});
+          }
+
+          console.log("CARDS", cards);
+
+          this.setState({cards});          
+      }
+    }.bind(this);
+
+    xhr.send(body);
+  }
+
   handleYup (card) {
     console.log(`Liked`)
   }
@@ -41,11 +105,35 @@ export default class PhotoViewer extends Component {
   }
 
   //Return an array of images
-  getImages() {
-    return Cards
-  }
+  // getImages() {
+  //  var url = serverAddress + "/api/photo_list";
+  //   console.log(url);
+  //   console.log("Starting getPhotos function.");
+
+  //   var body = new FormData();
+  //   body.append('apikey', apikey);
+  //   body.append('userLat', this.state.initialPosition.coords.latitude);
+  //   body.append('userLon', this.state.initialPosition.coords.longitude);
+  //   body.append('n', 20);
+
+  //   xhr = new XMLHttpRequest();
+  //   xhr.open('POST', url);
+
+  //   xhr.onreadystatechange = function() {      
+  //     if(xhr.readyState == 4 && xhr.status == 200) {
+  //         console.log(xhr.responseText);
+  //         var newPhotos = JSON.parse(xhr.responseText);
+  //         console.log(newPhotos);
+  //         return newPhotos
+  //         this.setState({newPhotos: newPhotos.images});
+  //     }
+  //   }.bind(this);
+
+  //   xhr.send(body);
+  // }
 
   onButtonPress(isLike) {
+    console.log(this.state);
     var temp = this.state.cards;
     var currentCard = temp[0];
     this.setState({
@@ -55,6 +143,15 @@ export default class PhotoViewer extends Component {
   }
 
   render() {
+    var cards = []
+    if (this.state.newPhotos != null) {
+      for (var index = 0; index < this.state.newPhotos.length; index++) {
+        cards.append(this.state.newPhotos.img);
+      }
+
+      console.log("CARDS", cards);
+    }
+
     return (
       <View style={styles.page}>
         <View style={styles.imageContainer}>
