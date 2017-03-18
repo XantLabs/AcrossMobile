@@ -88,25 +88,25 @@ export class MainScreen extends React.Component {
   sendImage() {
     var url = serverAddress + "/api/upload";
 
-    let file = NativeModules.RNImageToBase64.getBase64String(uri, (err, base64) => {
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          file: base64,
-          lat: this.state.initialPosition.coords.latitude,
-          lon: this.state.initialPosition.coords.longitude,
-          caption: "",
-          language: this.state.lang,
-          apikey: apikey
-        })
-      })
-      .then((response) => console.log(response.text()))
-      .catch((error) => console.warn(error));
-    })
+    console.log("Starting sendImage function.");
+
+    var photo = {
+        uri: this.state.image,
+        type: 'image/jpeg',
+        name: 'img.jpg',
+    };
+
+    var body = new FormData();
+    body.append('apikey', apikey);
+    body.append('img', photo);
+    body.append('lat', this.state.initialPosition.coords.latitude);
+    body.append('lon', this.state.initialPosition.coords.longitude);
+    body.append('caption', "");
+    body.append('language', this.state.lang);
+
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.send(body);
   }
 
   clearImage() {
