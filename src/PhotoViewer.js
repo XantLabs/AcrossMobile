@@ -45,11 +45,13 @@ export default class PhotoViewer extends Component {
     return Cards
   }
 
-  onButtonPress() {
-    console.log(this.refs["swipecard"]);
+  onButtonPress(isLike) {
+    var temp = this.state.cards;
+    var currentCard = temp[0];
     this.setState({
-      cards: this.state.cards.splice(0,1)
-    })
+      cards: this.state.cards.slice(1)
+    });
+    (isLike) ? this.handleYup(currentCard) : this.handleNope(currentCard);
   }
 
   render() {
@@ -61,7 +63,6 @@ export default class PhotoViewer extends Component {
 
           renderCard={(cardData) => <Card {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
-          ref = "swipecard"
           handleYup={this.handleYup}
           handleNope={this.handleNope}
           />
@@ -70,7 +71,7 @@ export default class PhotoViewer extends Component {
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.dislikeButton}
-            onPress={this.onButtonPress.bind(this)}
+            onPress={this.onButtonPress.bind(this, false)}
             accessibilityLabel="Dislike Button"
           >
               <Text style={styles.icon}>✖</Text>
@@ -81,7 +82,7 @@ export default class PhotoViewer extends Component {
 
           <TouchableHighlight
             style={styles.likeButton}
-            onPress={this.onButtonPress.bind(this)}
+            onPress={this.onButtonPress.bind(this, true)}
             accessibilityLabel="Like Button"
           >
               <Text style={styles.icon}>✔</Text>
