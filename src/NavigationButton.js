@@ -9,7 +9,7 @@ export class NavigationButton extends React.Component {
 
     return (
       <View style={style}>
-        <Button onPress={() => { this.props.navigation.navigate(this.props.link) }} title={this.props.name} />
+        <Button color="#232528" onPress={() => { this.props.navigation.navigate(this.props.link) }} title={this.props.name} />
       </View>
     );
   }
