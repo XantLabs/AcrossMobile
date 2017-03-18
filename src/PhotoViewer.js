@@ -5,7 +5,7 @@ import SwipeCards from 'react-native-swipe-cards';
 let Card = React.createClass({
   render() {
     return (
-      <Image style={styles.image} source = {{uri:this.props.img}}/>
+      <Image resizeMode='contain' style={styles.image} source = {{uri:this.props.img}}/>
     )
   }
 })
@@ -22,7 +22,7 @@ const Cards = [
   {img:"http://i.imgur.com/qEzKzk9.jpg",id:1},
   {img:"http://i.imgur.com/8OXR0a5.jpg",id:2},
   {img:"http://i.imgur.com/USrrDph.jpg",id:3},
-  {img:"http://i.imgur.com/qEzKzk9.jpg",id:4},
+  {img:"http://imgur.com/4YsfeYp.jpg",id:4},
   {img:"http://i.imgur.com/qEzKzk9.jpg",id:5},
 ]
 
@@ -79,15 +79,15 @@ export default class PhotoViewer extends Component {
 const onButtonPress = () => {
   console.log("Button Pressed");
 };
-
+var {height,width} = Dimensions.get('window');
 var styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     alignItems: 'stretch',
   },
   image: {
-    height: 450,
-    width: 350
+    height: height*0.8,
+    width: width
   }
 });
 
