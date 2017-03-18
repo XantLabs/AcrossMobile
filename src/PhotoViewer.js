@@ -53,10 +53,31 @@ export default class PhotoViewer extends Component {
         this.getPhotos();
 
       }, (error) => alert(JSON.stringify(error)));
+  }
 
-      // this.setState({
-      //   cards: this.getImages()
-      // })
+  voteOnPhoto(isUp, url) {
+    var baseURL = null;
+    
+    if (isUp) 
+      baseURL = serverAddress + "/api/upvote/" + url;
+    else
+      baseURL = serverAddress + "/api/downvote/" + url;
+
+    console.log("Starting vote function.");
+    console.log(baseURL);
+
+    var body = new FormData();
+    body.append('apikey', apikey);
+
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', baseURL);
+
+    xhr.onreadystatechange = function() {  
+      if(xhr.readyState == 4 && xhr.status == 200) {
+      }
+    }.bind(this);
+
+    xhr.send(body);
   }
 
 
@@ -84,7 +105,7 @@ export default class PhotoViewer extends Component {
 
           var cards = [];
           for (var index = 0; index < newPhotos.length; index++) {
-            cards.push({ img: serverAddress +"/api/media/"+ newPhotos[index]["img"]});
+            cards.push({ img: serverAddress +"/api/media/"+ newPhotos[index]["img"], base: newPhotos[index]["img"]});
           }
 
           console.log("CARDS", cards);
@@ -98,9 +119,11 @@ export default class PhotoViewer extends Component {
 
   handleYup (card) {
     console.log(`Liked`)
+    this.voteOnPhoto(true, card.base)
   }
   handleNope (card) {
     console.log(`Dislike`)
+    this.voteOnPhoto(false, card.base)
   }
 
   onButtonPress(isLike) {

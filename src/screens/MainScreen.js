@@ -28,6 +28,19 @@ export class MainScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+      var lang = ReactNativeI18n.locale;
+      this.setState({lang});
+
+      navigator.geolocation.getCurrentPosition( (position) => { 
+       var initialPosition = position; 
+       this.setState({initialPosition});
+       console.log("Got location!");
+
+      }, (error) => alert(JSON.stringify(error)));
+  }
+
+
   render() {
     console.log(this.state);
 
@@ -80,33 +93,6 @@ export class MainScreen extends React.Component {
       </View>
     );
   }
-  
-  voteOnPhoto(isUp, url) {
-    var baseURL = null;
-    
-    if (isUp) 
-      baseURL = serverAddress + "/api/upvote/" + url;
-    else
-      baseURL = serverAddress + "/api/downvote/" + url;
-
-    console.log("Starting vote function.");
-    console.log(baseURL);
-
-    var body = new FormData();
-    body.append('apikey', apikey);
-
-    xhr = new XMLHttpRequest();
-    xhr.open('POST', baseURL);
-
-    xhr.onreadystatechange = function() {  
-      if(xhr.readyState == 4 && xhr.status == 200) {
-      }
-    }.bind(this);
-
-    xhr.send(body);
-  }
-
-
 
   sendImage() {
     var url = serverAddress + "/api/upload";
