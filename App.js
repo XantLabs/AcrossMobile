@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
-// import { SnapchatImageView } from './snapimageview';
 
 class Snap extends React.Component {
   componentDidMount() {
