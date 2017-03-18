@@ -20,15 +20,9 @@ export class MainScreen extends React.Component {
     super();
     this.state = {
       image: null,
-      hasCameraPermission: null,
-      cameraRef: null
+      hasCameraPermission: null
     }
   }
-
-  // async componentWillMount() {
-  //   // const { status } = await Expo.Permissions.askAsync(Expo.Permissions.CAMERA);
-  //   // this.setState({hasCameraPermission: status === 'granted'});
-  // }  
 
   render() {
     console.log(this.state);
@@ -64,7 +58,7 @@ export class MainScreen extends React.Component {
         {imageOn}
         
         <TouchableHighlight onPress={this.takePicture.bind(this)} style={{ zIndex: 2, alignItems: 'center', position: 'absolute', bottom: 50, left: 0, right: 0}}>
-          <View style={{height: 50, width: 50, borderRadius: 128, backgroundColor: 'black', opacity:0.7}}>
+          <View style={{height: 50, width: 50, borderRadius: 128, backgroundColor: '#232528', opacity:0.7}}>
             <View style={{left: 2, top: 2, height: 46, width: 46, borderRadius: 128, backgroundColor: 'white', opacity: 0.7}}>
               
             </View>
@@ -72,7 +66,7 @@ export class MainScreen extends React.Component {
         </TouchableHighlight>
 
         <NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />
-        <StatusBar hidden={true} />
+        <StatusBar hidden={false} />
 
         <NavigationButton navigation={this.props.navigation} styleType={"ViewQueueButton"} name={"View Queue"} link={"Queue"} />
       </View>
