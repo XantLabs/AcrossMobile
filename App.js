@@ -15,8 +15,8 @@ import { QueueScreen } from './src/screens/QueueScreen';
 import PhotoViewer from './src/PhotoViewer';
 
 export default App = TabNavigator({
-  Main: {screen: MainScreen},
   Settings: {screen: SettingsScreen},
+  Main: {screen: MainScreen},
   Queue: {screen: PhotoViewer}
 }, {
   navigationOptions: {
