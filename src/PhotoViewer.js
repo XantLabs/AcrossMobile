@@ -60,8 +60,8 @@ export default class PhotoViewer extends Component {
       var lang = ReactNativeI18n.locale;
       this.setState({lang});
 
-      navigator.geolocation.getCurrentPosition( (position) => { 
-       var initialPosition = position; 
+      navigator.geolocation.getCurrentPosition( (position) => {
+       var initialPosition = position;
        this.setState({initialPosition});
        console.log("Got location!");
         this.getPhotos();
@@ -71,8 +71,8 @@ export default class PhotoViewer extends Component {
 
   voteOnPhoto(isUp, url) {
     var baseURL = null;
-    
-    if (isUp) 
+
+    if (isUp)
       baseURL = serverAddress + "/api/upvote/" + url;
     else
       baseURL = serverAddress + "/api/downvote/" + url;
@@ -86,7 +86,7 @@ export default class PhotoViewer extends Component {
     xhr = new XMLHttpRequest();
     xhr.open('POST', baseURL);
 
-    xhr.onreadystatechange = function() {  
+    xhr.onreadystatechange = function() {
       if(xhr.readyState == 4 && xhr.status == 200) {
       }
     }.bind(this);
@@ -109,8 +109,7 @@ export default class PhotoViewer extends Component {
     xhr = new XMLHttpRequest();
     xhr.open('POST', url);
 
-    xhr.onreadystatechange = function() {      
-      // console.log(xhr.responseText);
+    xhr.onreadystatechange = function() {
       console.log(xhr.readyState, xhr.status);
       if(xhr.readyState == 4 && xhr.status == 200) {
           console.log(xhr.responseText);
@@ -125,7 +124,7 @@ export default class PhotoViewer extends Component {
 
           console.log("CARDS", cards);
 
-          this.setState({cards});          
+          this.setState({cards});
       }
     }.bind(this);
 
@@ -171,7 +170,7 @@ export default class PhotoViewer extends Component {
             onPress={this.onButtonPress.bind(this, false)}
             accessibilityLabel="Dislike Button"
           >
-              <Text style={styles.icon}>✖</Text>
+              <Text style={styles.icon}>x</Text>
           </TouchableHighlight>
           <View style={styles.space}>
 
@@ -182,7 +181,7 @@ export default class PhotoViewer extends Component {
             onPress={this.onButtonPress.bind(this, true)}
             accessibilityLabel="Like Button"
           >
-              <Text style={styles.icon}>✔</Text>
+              <Text style={styles.icon}>✓</Text>
           </TouchableHighlight>
 
 
@@ -213,6 +212,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#333'
   },
   buttonContainer: {
+    backgroundColor: "transparent",
     flex: 0.125,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -220,20 +220,28 @@ var styles = StyleSheet.create({
   },
 
   likeButton: {
+    opacity: 1,
     width: 80,
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: 'green',
+    borderStyle: "solid",
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: 'transparent',
     alignItems: 'center',
   },
 
   dislikeButton: {
+    opacity: 1,
     width: 80,
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: 'red',
+    borderStyle: "solid",
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: 'transparent',
     alignItems: 'center'
   },
 
@@ -249,6 +257,7 @@ var styles = StyleSheet.create({
   centerText: {
     color: "#FFFFFF",
     position: 'absolute',
+    fontSize: 35
   }
 
 });

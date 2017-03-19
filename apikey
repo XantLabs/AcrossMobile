@@ -1,0 +1,2 @@
+export var apikey = "wertyusdfghjkcvbnm4567890fghjkl";
+export var serverAddress = "http://108.61.194.210:4200";
