@@ -175,6 +175,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#333'
   },
   buttonContainer: {
+    backgroundColor: "transparent",
     flex: 0.125,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -187,6 +188,9 @@ var styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
+    borderStyle: "solid",
+    borderColor: "white",
+    borderWidth: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
   },
@@ -197,6 +201,9 @@ var styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
+    borderStyle: "solid",
+    borderColor: "white",
+    borderWidth: 1,
     backgroundColor: 'transparent',
     alignItems: 'center'
   },
@@ -206,7 +213,6 @@ var styles = StyleSheet.create({
   },
 
   icon: {
-    borderColor: "white",
     color: '#F2F1EF',
     fontSize: 35
   }
