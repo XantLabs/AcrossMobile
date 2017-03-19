@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, Text, View, Image, StatusBar, Button } from 'react-native';
+import { StyleSheet, TouchableHighlight, Text, TextInput, View, Image, StatusBar, Button } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { NavigationButton } from '../NavigationButton';
 
@@ -86,6 +86,12 @@ export class MainScreen extends React.Component {
         <View style={{position: 'absolute', height: 50, width: 50, right: 10, top: 10}}>
         <Button onPress={() => { this.setState({backCamera: !this.state.backCamera})}} title="#" />
         </View>
+
+        <TextInput
+        style={{color: 'white', bottom: 120, left:0, right:0, position: 'absolute', height: 40, backgroundColor: '#232528', opacity: 0.7}}
+        onChangeText={(text) => this.setState({text})}
+        value={this.state.text}
+      />
 
         {/*<NavigationButton navigation={this.props.navigation} styleType={"SettingsButton"} name={"⚙"} link={"Settings"} />*/}
         
