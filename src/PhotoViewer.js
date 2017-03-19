@@ -46,8 +46,8 @@ export default class PhotoViewer extends Component {
       var lang = ReactNativeI18n.locale;
       this.setState({lang});
 
-      navigator.geolocation.getCurrentPosition( (position) => { 
-       var initialPosition = position; 
+      navigator.geolocation.getCurrentPosition( (position) => {
+       var initialPosition = position;
        this.setState({initialPosition});
        console.log("Got location!");
         this.getPhotos();
@@ -74,7 +74,7 @@ export default class PhotoViewer extends Component {
     xhr = new XMLHttpRequest();
     xhr.open('POST', url);
 
-    xhr.onreadystatechange = function() {      
+    xhr.onreadystatechange = function() {
       console.log(xhr.readyState, xhr.status);
       if(xhr.readyState == 4 && xhr.status == 200) {
           console.log(xhr.responseText);
@@ -89,7 +89,7 @@ export default class PhotoViewer extends Component {
 
           console.log("CARDS", cards);
 
-          this.setState({cards});          
+          this.setState({cards});
       }
     }.bind(this);
 
@@ -133,7 +133,7 @@ export default class PhotoViewer extends Component {
             onPress={this.onButtonPress.bind(this, false)}
             accessibilityLabel="Dislike Button"
           >
-              <Text style={styles.icon}>✖</Text>
+              <Text style={styles.icon}>x</Text>
           </TouchableHighlight>
           <View style={styles.space}>
 
@@ -144,7 +144,7 @@ export default class PhotoViewer extends Component {
             onPress={this.onButtonPress.bind(this, true)}
             accessibilityLabel="Like Button"
           >
-              <Text style={styles.icon}>✔</Text>
+              <Text style={styles.icon}>✓</Text>
           </TouchableHighlight>
 
 
@@ -182,20 +182,22 @@ var styles = StyleSheet.create({
   },
 
   likeButton: {
+    opacity: 1,
     width: 80,
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: 'green',
+    backgroundColor: 'transparent',
     alignItems: 'center',
   },
 
   dislikeButton: {
+    opacity: 1,
     width: 80,
     height: 80,
     justifyContent: 'center',
     borderRadius: 40,
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
     alignItems: 'center'
   },
 
@@ -204,8 +206,9 @@ var styles = StyleSheet.create({
   },
 
   icon: {
+    borderColor: "white",
     color: '#F2F1EF',
-    fontSize: 30
+    fontSize: 35
   }
 
 });
