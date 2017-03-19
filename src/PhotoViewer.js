@@ -142,7 +142,8 @@ export default class PhotoViewer extends Component {
         <View style={styles.imageContainer}>
           <SwipeCards
           cards={this.state.cards}
-
+          showYup={false}
+          showNope={false}
           renderCard={(cardData) => <Card {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           handleYup={this.handleYup.bind(this)}
