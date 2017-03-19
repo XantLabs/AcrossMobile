@@ -1,14 +1,27 @@
+
 import React, { Component } from 'react';
-import { AppRegistry,Dimensions,StyleSheet, Text, Image,View, Button, TouchableHighlight } from 'react-native';
+import { AppRegistry,Dimensions,StyleSheet, Text, TextInput, Image,View, Button, TouchableHighlight } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 
-let Card = React.createClass({
+class Card extends Component {
+  constructor(props) {
+    super()
+    this.state = {
+      text: ""
+    }
+  }
+
   render() {
     return (
+      <View style={styles.image}>
       <Image resizeMode='contain' style={styles.image} source = {{uri:this.props.img}}/>
+      <View style={styles.centerText}>
+      <Text>{this.props.caption}</Text>
+      </View>
+      </View>
     )
   }
-})
+}
 
 class NoMoreCards extends Component {
   render() {
@@ -37,7 +50,8 @@ export default class PhotoViewer extends Component {
     this.state = {
       // cards:this.getImages(),
       lang: null,
-      newPhotos: null
+      newPhotos: null,
+      text: ""
     };
   }
 
@@ -106,7 +120,7 @@ export default class PhotoViewer extends Component {
 
           var cards = [];
           for (var index = 0; index < newPhotos.length; index++) {
-            cards.push({ img: serverAddress +"/api/media/"+ newPhotos[index]["img"], base: newPhotos[index]["img"]});
+            cards.push({ img: serverAddress +"/api/media/"+ newPhotos[index]["img"], base: newPhotos[index]["img"], caption: newPhotos[index]["caption"]});
           }
 
           console.log("CARDS", cards);
@@ -230,6 +244,11 @@ var styles = StyleSheet.create({
   icon: {
     color: '#F2F1EF',
     fontSize: 30
+  },
+
+  centerText: {
+    color: "#FFFFFF",
+    position: 'absolute',
   }
 
 });
