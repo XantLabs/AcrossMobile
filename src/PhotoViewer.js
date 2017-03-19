@@ -16,7 +16,7 @@ class Card extends Component {
       <View style={styles.image}>
       <Image resizeMode='contain' style={styles.image} source = {{uri:this.props.img}}/>
       <View style={styles.centerText}>
-      <Text>{this.props.caption}</Text>
+      <Text style={{color:"white", fontSize: 20, textAlign: "center"}}>{this.props.caption}</Text>
       </View>
       </View>
     )
@@ -104,7 +104,7 @@ export default class PhotoViewer extends Component {
     body.append('apikey', apikey);
     body.append('userLat', this.state.initialPosition.coords.latitude);
     body.append('userLon', this.state.initialPosition.coords.longitude);
-    body.append('n', 20);
+    body.append('n', 200);
 
     xhr = new XMLHttpRequest();
     xhr.open('POST', url);
@@ -202,7 +202,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#F2F1EF'
   },
   imageContainer: {
-    flex: 0.7,
+    flex: 1,
     alignItems: 'stretch',
     borderRadius: 500
   },
@@ -212,8 +212,12 @@ var styles = StyleSheet.create({
     backgroundColor: '#333'
   },
   buttonContainer: {
-    backgroundColor: "transparent",
-    flex: 0.125,
+    position: 'absolute',
+    bottom: 30,
+    left: 0,
+    right: 0,
+    // backgroundColor: "black",
+    flex: 0.2,
     flexDirection: 'row',
     justifyContent: 'center',
 
@@ -255,9 +259,16 @@ var styles = StyleSheet.create({
   },
 
   centerText: {
-    color: "#FFFFFF",
     position: 'absolute',
-    fontSize: 35
+    bottom: 150,
+    // backgroundColor: "#F2F1EF",
+    opacity: 1,
+    left: 0,
+    right: 0,
+    height: 70,
+    paddingTop: 15,
+    alignItems: 'center'
+    // fontSize: 35
   }
 
 });
